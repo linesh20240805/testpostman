@@ -1,6 +1,6 @@
 api:
   # -t the target API definition
-  target: https://github.com/linesh20240805/testpostman/blob/main/Connect2ID-IDPorten.postman_collection.json
+  target: Connect2ID-IDPorten.postman_collection.json
   # -f the API format, openapi, soap, or graphql
   format: openapi
   # -O the hostname to override in the (remote) OpenAPI spec
