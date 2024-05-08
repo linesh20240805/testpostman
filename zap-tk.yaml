@@ -1,6 +1,6 @@
 api:
   # -t the target API definition
-  target:   https://idporten.dev/.well-known/openid-configuration
+  target:   Connect2ID-IDPorten.postman_collection.json
   # -f the API format, openapi, soap, or graphql
   format: openapi
   # -O the hostname to override in the (remote) OpenAPI spec
