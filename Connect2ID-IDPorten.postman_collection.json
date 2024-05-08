@@ -1,0 +1,874 @@
+{
+	"info": {
+		"_postman_id": "332e17e8-c721-40b7-9019-01cd4cb41ecf",
+		"name": "Connect2ID-IDPorten",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6831476",
+		"_collection_link": "https://difi-collaborate.postman.co/workspace/Sysark-smoke-test~2a8782f1-f67f-41af-9e6c-b6e432c0f870/collection/6831476-332e17e8-c721-40b7-9019-01cd4cb41ecf?action=share&source=collection_link&creator=6831476"
+	},
+	"item": [
+		{
+			"name": "Akseptansekritierer 1 connect2ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"ID-porten OIDC-basert grensesnitt Test\", function () {",
+							"     var jsonData = pm.response.json();",
+							"     console.log(jsonData);",
+							"    ",
+							"   let hosturl= pm.environment.get(\"idporten_host\");",
+							"    let authorizeurl= pm.environment.get(\"idporten_authorize_url\");",
+							"    let idportenurl= pm.environment.get(\"idporten_url\");",
+							"    ",
+							"    pm.expect(jsonData.issuer).to.eql(hosturl);",
+							"",
+							"       pm.expect(jsonData.pushed_authorization_request_endpoint).to.eql(hosturl+\"/par\");",
+							"pm.expect(jsonData.authorization_endpoint).to.eql(authorizeurl);",
+							"pm.expect(jsonData.token_endpoint).to.eql(hosturl+\"/token\");",
+							"pm.expect(jsonData.scopes_supported).to.eql( [ 'openid', 'profile' ]);",
+							"//pm.expect(jsonData.claims_supported).to.eql([ 'orgnr' ]);",
+							"pm.expect(jsonData.response_types_supported).to.eql(['code']);",
+							"//pm.expect(jsonData.authorization_details_types_supported).to.eql(null);",
+							"pm.expect(jsonData.response_modes_supported).to.eql([ 'query',  'form_post', 'query.jwt', 'form_post.jwt']);",
+							"pm.expect(jsonData.grant_types_supported).to.eql([",
+							"        \"authorization_code\",",
+							"        \"refresh_token\"",
+							"    ],);",
+							"pm.expect(jsonData.acr_values_supported).to.eql( [ 'idporten-loa-low','idporten-loa-substantial', 'idporten-loa-high']);",
+							"",
+							"pm.expect(jsonData.subject_types_supported).to.eql(  [ 'public', 'pairwise' ]);",
+							"",
+							"       ",
+							"pm.expect(jsonData.token_endpoint_auth_methods_supported).to.eql( [",
+							"        \"client_secret_basic\",",
+							"        \"client_secret_post\",",
+							"        \"none\", \"private_key_jwt\"",
+							"    ]); ",
+							"    pm.expect(jsonData.ui_locales_supported).to.eql( [  'en', 'nb', 'nn', 'se' ]); ",
+							"",
+							"pm.expect(jsonData.request_parameter_supported).to.eql(false);",
+							"pm.expect(jsonData.request_uri_parameter_supported).to.eql(false);",
+							"pm.expect(jsonData.authorization_response_iss_parameter_supported).to.eql(true);",
+							"pm.expect(jsonData.dpop_signing_alg_values_supported).to.eql(undefined);",
+							"",
+							" pm.expect(jsonData.authorization_signing_alg_values_supported).to.eql(  [",
+							"        \"RS256\"",
+							"    ]);        ",
+							"",
+							"pm.expect(jsonData.subject_types_supported).to.eql([\"public\",\"pairwise\"])",
+							"pm.expect(jsonData.userinfo_endpoint).to.eql(hosturl+\"/userinfo\")",
+							"",
+							"pm.expect(jsonData.end_session_endpoint).to.eql(idportenurl+\"/logout\")  ",
+							"",
+							"",
+							"pm.expect(jsonData.display_values_supported).to.eql([\"page\"]);",
+							"//pm.expect(jsonData.claim_types_supported).to.eql([\"normal\"]);",
+							"//pm.expect(jsonData.claims_supported).to.eql([ 'sub', 'pid', 'iss', 'auth_time', 'acr', 'amr',]);",
+							"",
+							"       // pm.expect(jsonData.claims_parameter_supported).to.eql(false);",
+							"",
+							"        pm.expect(jsonData.frontchannel_logout_supported).to.eql(true);",
+							"        pm.expect(jsonData.frontchannel_logout_session_supported).to.eql(true);",
+							"   ",
+							"",
+							"         pm.expect(jsonData.ui_locales_supported).to.eql( [ 'en', 'nb', 'nn', 'se' ]); ",
+							"   ",
+							"",
+							"    pm.expect(jsonData.registration_endpoint).to.eql(undefined); ",
+							"    pm.expect(jsonData.authorization_encryption_alg_values_supported).to.eql(undefined); ",
+							"    pm.expect(jsonData.require_request_uri_registration).to.eql(undefined); ",
+							"    pm.expect(jsonData.request_object_encryption_enc_values_supported).to.eql(undefined); ",
+							"    pm.expect(jsonData.request_uri_quota).to.eql(undefined); ",
+							"    pm.expect(jsonData.backchannel_logout_supported).to.eql(undefined); ",
+							"    pm.expect(jsonData.backchannel_logout_session_supported).to.eql(undefined); ",
+							"    pm.expect(jsonData.tls_client_certificate_bound_access_tokens).to.eql(undefined); ",
+							"    pm.expect(jsonData.authorization_encryption_enc_values_supported).to.eql(undefined); ",
+							"    pm.expect(jsonData.claim_types_supported).to.eql(undefined); ",
+							"pm.expect(jsonData.id_token_signing_alg_values_supported).to.eql( [\"RS256\"]); ",
+							"//pm.expect(jsonData.id_token_signing_alg_values_supported).to.eql(\"RS256\");",
+							"pm.expect(jsonData.userinfo_signing_alg_values_supported).to.eql(undefined);",
+							"pm.expect(jsonData.request_object_encryption_alg_values_supported).to.eql(undefined);",
+							"pm.expect(jsonData.prompt_values_supported).to.eql( [ 'consent', 'login', 'none' ] );",
+							"pm.expect(jsonData.includeX5C).to.eql(undefined);",
+							"//pm.expect(jsonData.allowNonTLSLogoutURIsForTest).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{idporten_host}}/.well-known/openid-configuration",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let kid=pm.environment.get(\"idporten_kid\");",
+							"let publickey=pm.environment.get(\"idporten_public\");",
+							"",
+							"pm.test(\"kid and public key matches for 2 certificates\", function () {",
+							"     var jsonData = pm.response.json();",
+							"     console.log(jsonData.keys[0].n);",
+							"    pm.expect(jsonData.keys[0].n).to.eql(publickey);",
+							"        pm.expect(jsonData.keys[0].kid).to.eql(kid);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{idporten_host}}/jwks.json",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						"jwks.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "2d4e9cde-99b5-4a7a-b805-2d0938abe56c"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "a3121a7c-072c-41f3-ad94-accff2a8abee"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "code_verifier",
+							"value": "DJ86o69ZnfEplKB41GgCSa5vJ0DR0atDbguAwpuxYK28mMrTyi6uXaDXowoCNbZR2P0",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge",
+							"value": "5_UH_6d2D5irWo-KpcYgWq340hh82n2-4-qFMqhvgUQ",
+							"type": "text"
+						},
+						{
+							"key": "authorization_detai]ls",
+							"value": "[{\"type\":\"ansattporten:altinn:service\",\"resource\": \"urn:altinn:resource:5385:1\"}]",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "2e7fc45e36e109ac420dafb285745093120becc8",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "21eef308e3c925129bae2782408f5c565fcdff31",
+							"type": "text"
+						},
+						{
+							"key": "ui_locales",
+							"value": "nn",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge_method",
+							"value": "S256",
+							"type": "text"
+						},
+						{
+							"key": "response_type",
+							"value": "code",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://idporten-dummy.digdir.no/authorize/response/callback",
+							"type": "text"
+						},
+						{
+							"key": "acr_values",
+							"value": "idporten-loa-substantial",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{idporten_host}}/par",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						"par"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 4 ugyldig scope",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"",
+							"pm.test(\"error_description\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var tempScope= \"Scope\"+ pm.collectionVariables.get(\"scope\") +\"not registered on client\";",
+							"    console.log(tempScope);",
+							"    pm.expect(jsonData.error_description).to.eql(\"Scope testid not registered on client\");",
+							"      pm.expect(jsonData.error).to.eql(\"invalid_scope\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "c0cb3f8a-8e5c-4b3c-baf6-be89f0f39b28"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "790d0a1f-b000-40ec-8139-0b0b871b4121"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "code_verifier",
+							"value": "DJ86o69ZnfEplKB41GgCSa5vJ0DR0atDbguAwpuxYK28mMrTyi6uXaDXowoCNbZR2P0",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge",
+							"value": "5_UH_6d2D5irWo-KpcYgWq340hh82n2-4-qFMqhvgUQ",
+							"type": "text"
+						},
+						{
+							"key": "authorization_detai]ls",
+							"value": "[{\"type\":\"ansattporten:altinn:service\",\"resource\": \"urn:altinn:resource:5385:1\"}]",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "scope",
+							"value": "testid",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "2e7fc45e36e109ac420dafb285745093120becc8",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "21eef308e3c925129bae2782408f5c565fcdff31",
+							"type": "text"
+						},
+						{
+							"key": "ui_locales",
+							"value": "nn",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge_method",
+							"value": "S256",
+							"type": "text"
+						},
+						{
+							"key": "response_type",
+							"value": "code",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://idporten-dummy.digdir.no/authorize/response/callback",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{idporten_host}}/par",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						"par"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 4 -ugyldig client auth",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "fe279bdf-233d-4b2e-b1db-7ae2d9bc2f87"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "18d89a4c-3f48-4673-a676-f8d1ee990753"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "code_verifier",
+							"value": "DJ86o69ZnfEplKB41GgCSa5vJ0DR0atDbguAwpuxYK28mMrTyi6uXaDXowoCNbZR2P0",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge",
+							"value": "5_UH_6d2D5irWo-KpcYgWq340hh82n2-4-qFMqhvgUQ",
+							"type": "text"
+						},
+						{
+							"key": "authorization_detai]ls",
+							"value": "[{\"type\":\"ansattporten:altinn:service\",\"resource\": \"urn:altinn:resource:5385:1\"}]",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "2e7fc45e36e109ac420dafb285745093120becc8",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "21eef308e3c925129bae2782408f5c565fcdff31",
+							"type": "text"
+						},
+						{
+							"key": "ui_locales",
+							"value": "nn",
+							"type": "text"
+						},
+						{
+							"key": "code_challenge_method",
+							"value": "S256",
+							"type": "text"
+						},
+						{
+							"key": "response_type",
+							"value": "code",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://idporten-dummy.digdir.no/authorize/response/callback",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{idporten_host}}/par",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						"par"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 6 - ugyldig uri",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"Invalid+request+URI:+Invalid+PAR+URI\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZAd==",
+						"type": "text",
+						"uuid": "496804f8-9888-4a5c-970d-9140e02f3d7a"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "040e2f96-ca4b-42d7-b6c0-a99a1f4c7613"
+					}
+				],
+				"url": {
+					"raw": "{{idporten_authorize_url}}?client_id=f7c30286-f9c0-4ac6-b4b8-22cce033e19a&request_uri=urn:ietf:params:oauth:request_uri:ilNUE3iBa7LWfDPTp8SkVg.2dAYh6_Rx7lJstRQtU16CAD",
+					"host": [
+						"{{idporten_authorize_url}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a"
+						},
+						{
+							"key": "request_uri",
+							"value": "urn:ietf:params:oauth:request_uri:ilNUE3iBa7LWfDPTp8SkVg.2dAYh6_Rx7lJstRQtU16CAD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 6 - manglende uri",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"Invalid+request:+Missing+response_type+parameter\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "d874965c-ac40-4241-befe-13dfb05cbceb"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "581d6c3e-04aa-4207-8fcb-26f4c2a460ed"
+					}
+				],
+				"url": {
+					"raw": "{{idporten_authorize_url}}?client_id=f7c30286-f9c0-4ac6-b4b8-22cce033e19a",
+					"host": [
+						"{{idporten_authorize_url}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a"
+						},
+						{
+							"key": "request_uri",
+							"value": "urn:ietf:params:oauth:request_uri:1u_Eu0WmCsppIb9q5n01tg.m0Z7qmwEbBSz5Of2GCbiug",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 6 - expired uri",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"Invalid+request+URI:+Expired+/+redeemed+PAR+URI \");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "65334c6b-f21c-4d5b-8fbc-776b0ff91a6f"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "290c99b3-0409-4002-ab8e-ca4fb57558f5"
+					}
+				],
+				"url": {
+					"raw": "{{idporten_authorize_url}}?client_id=f7c30286-f9c0-4ac6-b4b8-22cce033e19a&request_uri={{expired_uri}}",
+					"host": [
+						"{{idporten_authorize_url}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "f7c30286-f9c0-4ac6-b4b8-22cce033e19a"
+						},
+						{
+							"key": "request_uri",
+							"value": "{{expired_uri}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 6 - annen client_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"Invalid+client+ID:+042fc7d6-3dba-4af4-b4c6-c6630ade0c2\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "26c1c1af-0f00-4bc2-818a-1ac7e9db5ec9"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "defc57b0-8a34-456d-98c7-6745e3209a5f"
+					}
+				],
+				"url": {
+					"raw": "{{idporten_authorize_url}}?client_id=042fc7d6-3dba-4af4-b4c6-c6630ade0c2&request_uri=urn:ietf:params:oauth:request_uri:8fhXX_7MpONoZ-2YB9SH_w.",
+					"host": [
+						"{{idporten_authorize_url}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "042fc7d6-3dba-4af4-b4c6-c6630ade0c2"
+						},
+						{
+							"key": "request_uri",
+							"value": "urn:ietf:params:oauth:request_uri:8fhXX_7MpONoZ-2YB9SH_w."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Akseptansekritierer 7 feil siden",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 503\", function () {",
+							"    pm.response.to.have.status(503);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZjdjMzAyODYtZjljMC00YWM2LWI0YjgtMjJjY2UwMzNlMTlhOmYyOTcxNGM4LTBiOTgtNGZhMC05ZjI3LWJjYWVmZGVkODQyZA==",
+						"type": "text",
+						"uuid": "2aaaaade-e65e-4013-bb3a-96d9797fa26e"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"uuid": "4889e733-0e25-463a-846b-c3f5fed00699"
+					}
+				],
+				"url": {
+					"raw": "{{idporten_host}}/test",
+					"host": [
+						"{{idporten_host}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getobof",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{idporten_authorize_url}}?client_id=oidc_client_lra&redirect_uri=https://c2eid-idporten.digdir.no/idporten-oidc-client/authorize/response&scope=openid&state=konzRNs6D1nmcgamNpbe&response_type=code&code_challenge=0WnRQgBCTz5jpUZodZ-sJNUPb5D74cI6B9Jx73p-jiA&code_challenge_method=S256&nonce=BD7PcxfAev5joT0xONxl&onbehalfof=obof_lra",
+					"host": [
+						"{{idporten_authorize_url}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "oidc_client_lra"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://c2eid-idporten.digdir.no/idporten-oidc-client/authorize/response"
+						},
+						{
+							"key": "scope",
+							"value": "openid"
+						},
+						{
+							"key": "state",
+							"value": "konzRNs6D1nmcgamNpbe"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "code_challenge",
+							"value": "0WnRQgBCTz5jpUZodZ-sJNUPb5D74cI6B9Jx73p-jiA"
+						},
+						{
+							"key": "code_challenge_method",
+							"value": "S256"
+						},
+						{
+							"key": "nonce",
+							"value": "BD7PcxfAev5joT0xONxl"
+						},
+						{
+							"key": "onbehalfof",
+							"value": "obof_lra"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
